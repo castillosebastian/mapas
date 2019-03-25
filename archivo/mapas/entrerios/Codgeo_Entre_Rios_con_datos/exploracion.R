@@ -2,6 +2,27 @@ library(ggplot2)
 library(ggmap)
 library(RColorBrewer)
 library(purrr)
+library(stringr)
+https://rpubs.com/Grolthas/maps
+# Unidades Territoriales
+# https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.3/download/departamentos.json
+
+
+https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.3/download/departamentos.json
+library(RJSONIO)
+library(RCurl)
+# grab the data
+raw_data <- getURL("https://infra.datos.gob.ar/catalog/modernizacion/dataset/7/distribution/7.3/download/departamentos.json")
+# Then covert from JSON into a list in R
+data <- fromJSON(raw_data)
+length(data)
+# We can coerce this to a data.frame
+final_data <- do.call(rbind, data)
+str(final_data)
+# Then write it to a flat csv file
+write.csv(final_data, "final_data.csv")
+
+
 
 
 # resolvì errores de instalacion: sudo apt-get install libproj-dev libgdal-dev
@@ -57,6 +78,10 @@ leaflet() %>%
               color = "grey", weight = 1, smoothFactor = 0.5,
               opacity = 1.0)
 
+
+
+
+
 #https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf
 
 ggmap(get_map("Entre Ríos, Argentina", source = "stamen", zoom = 7, maptype = "terrain"))  
@@ -99,55 +124,41 @@ HoustonMap +geom_point(aes(x = lon, y = lat,
                            size = offense,colour = offense), data = violent_crimes )
 
 parana <- geocode("Paraná")
+alcaraz <- geocode("Alcaraz, La Paz, Entre Ríos")
+error_gname <- c("Bovril", "Estancia Grande", "Segui")
 
-jdospaz_gcode <- geocode(jdospaz$localidad)
+jdospaz <- jdospaz %>% 
+  select(-lat, -lon) %>% 
+  mutate(provincia = "Entre Ríos") %>% 
+  mutate(refgeo = str_c(localidad, circunscripcion, provincia, sep= ", " ))
+  
 
-> geocode(jdospaz$localidad)
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Alcaraz&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Basavilbaso&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Bovril&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Warning: Geocoding "Bovril" failed with error:
-  
-  
-  Source : https://maps.googleapis.com/maps/api/geocode/json?address=Caseros&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Ceibas&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Cerrito&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Crespo&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Estancia+Grande&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Warning: Geocoding "Estancia Grande" failed with error:
-  
-  
-  Source : https://maps.googleapis.com/maps/api/geocode/json?address=Galarza&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=General+Campos&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Hasenkamp&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Hernandarias&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Hernandez&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Ibicuy&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Larroque&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Lucas+Gonzalez&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Macia&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Mansilla&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Maria+Grande&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Oro+Verde&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Pueblo+Brugo&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Ramirez&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=San+Benito&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Segui&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Warning: Geocoding "Segui" failed with error:
-  
-  
-  Source : https://maps.googleapis.com/maps/api/geocode/json?address=Santa+Elena&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=San+Jaime+de+la+Frontera&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=San+Jose&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Sauce+de+Luna&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Ubajay&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Urdinarrain&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+Clara&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+Dominguez&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+Elisa&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Viale&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+Mantero&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+Paranacito&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+San+Marcial&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Villa+Urquiza&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
-Source : https://maps.googleapis.com/maps/api/geocode/json?address=Aranguren&key=xxx-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo
+jdospaz <- jdospaz %>% 
+  filter(!localidad %in% error_gname)
+
+jdospaz_gcode <- geocode(jdospaz$refgeo)
+
+jdospaz <- jdospaz %>% 
+  bind_cols(jdospaz_gcode)
+
+causas_iniciadas_fueropaz_2018 <- causas_iniciadas_fueropaz_2018 %>% 
+  rename(organismo_descripcion = organismo)
+
+jdospaz <- jdospaz %>% 
+  left_join(causas_iniciadas_fueropaz_2018 %>% select(circunscripcion, organismo_descripcion, Total), 
+            by = c("circunscripcion", "organismo_descripcion"))
+
+entrerios <- c(lon = -59.228658, lat = -31.872508)
+
+Mymap <- ggmap(get_map(entrerios, source = "google",  maptype = "terrain", color = "bw", zoom = 7))  
+
+
+Mymap + 
+  geom_point(aes(x = lon, y = lat), data = jdospaz,
+             alpha = .5, size = sqrt(jdospaz$Total)) +
+  geom_text(data = jdospaz, aes(x = lon, y = lat, label = organismo), 
+            size = 3, vjust = 0, hjust = -0.5) +
+  scale_size(range=c(10,15))
+
+
+
