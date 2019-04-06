@@ -34,7 +34,7 @@ library(rgdal)
 # erios <- fortify(erios_json)
 
 ##################------------------########################################
-register_google(key = "AIzaSyDv-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo") 
+
 
 entrerios <- c(lon = -59.228658, lat = -31.872508)
 ermap <- ggmap(get_googlemap(center = entrerios, source = "google",  maptype = "terrain", color = "bw", zoom = 7, 
