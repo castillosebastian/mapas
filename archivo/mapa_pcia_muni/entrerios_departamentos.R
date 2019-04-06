@@ -125,7 +125,7 @@ ermap2 +
                aes_string("long", "lat", group = "id", fill = "inicx100mh"), colour = "grey", 
                size = 0.30) +
   labs(title = "Causas Iniciadas",
-       subtitle = "Distribución Territorial",
+       subtitle = "Cartografiado Cuantitativo",
        caption = "Fuente: STJER - APGE") +
   theme_nothing(legend = TRUE) +
   theme(legend.position = "bottom") +
