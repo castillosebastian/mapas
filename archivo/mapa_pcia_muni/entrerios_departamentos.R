@@ -35,17 +35,25 @@ library(readxl)
 # erios <- fortify(erios_json)
 
 ##################------------------########################################
- 
+register_google(key = "AIzaSyDv-pvCNcmXOdmju_2nyZ-3Ilwk2SUDGJo") 
+
 
 entrerios <- c(lon = -59.228658, lat = -31.872508)
-ermap <- ggmap(get_googlemap(center = entrerios, source = "google",  maptype = "terrain", color = "bw", zoom = 7, 
-                             size = c(640, 640), scale = 2, darken = c(0.1, "white")))  
+
+# ermap <- ggmap(get_googlemap(center = entrerios, source = "google",  maptype = "terrain", color = "bw", zoom = 7, 
+#                              size = c(640, 640), scale = 2, darken = c(0.1, "white")))  
 
 # ermap2 <- ggmap(get_stamenmap(bbox = c(left = -61.127930, bottom = -34.179998, right =
 #                                          -57.337646, top = -30.040566), source = "stamen",  maptype = "terrain", color = "bw")) 
-                           
+
+# ermap2 <- ggmap(get_stamenmap(bbox = c(left = -61.127930, bottom = -34.179998, right =
+#                                           -57.337646, top = -30.040566), source = "stamen",  maptype = "terrain", color = "bw")) 
+
 ermap2 <- ggmap(get_googlemap(center = entrerios, source = "google",  maptype = "roadmap", color = "bw", zoom = 7, 
-                             size = c(640, 640), scale = 2, darken = c(0.1, "white")))  
+                             size = c(640, 640), scale = 2, darken = c(0.9, "white")))  
+
+
+
 
 
 # departamentos de entre rios # https://github.com/mgaitan/departamentos_argentina.git
